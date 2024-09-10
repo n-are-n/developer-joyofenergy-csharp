@@ -1,46 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using JOIEnergy.Domain;
+﻿using JOIEnergy.Domain;
 using JOIEnergy.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace JOIEnergy.Controllers
+namespace JOIEnergy.Controllers;
+[ApiController]
+[Route("readings")]
+public class MeterReadingController(ILogger<MeterReadingController> logger, IMeterReadingService meterReadingService) : Controller
 {
-    [Route("readings")]
-    public class MeterReadingController : Controller
+    private readonly ILogger<MeterReadingController> _logger = logger;
+    private readonly IMeterReadingService _meterReadingService = meterReadingService;
+    [HttpGet("read/{smartMeterId}")]
+    public IActionResult GetReadings(string smartMeterId)
     {
-        private readonly IMeterReadingService _meterReadingService;
-
-        public MeterReadingController(IMeterReadingService meterReadingService)
+        try
         {
-            _meterReadingService = meterReadingService;
+            List<ElectricityReading> electricityReadings = _meterReadingService.GetReadings(smartMeterId);
+            return Ok(electricityReadings);
         }
-        // POST api/values
-        [HttpPost ("store")]
-        public ObjectResult Post([FromBody]MeterReadings meterReadings)
+        catch(Exception e)
         {
-            if (!IsMeterReadingsValid(meterReadings)) {
-                return new BadRequestObjectResult("Internal Server Error");
-            }
-            _meterReadingService.StoreReadings(meterReadings.SmartMeterId,meterReadings.ElectricityReadings);
-            return new OkObjectResult("{}");
+            _logger.LogError(e, string.Concat(nameof(MeterReadingController), ':', nameof(GetReadings)));
+            return StatusCode(StatusCodes.Status500InternalServerError, e);
         }
-
-        private bool IsMeterReadingsValid(MeterReadings meterReadings)
+    }
+    // POST api/values
+    [HttpPost ("store")]
+    public IActionResult StoreReadings([FromBody]MeterReadings meterReadings)
+    {
+        try
         {
-            string smartMeterId = meterReadings.SmartMeterId;
-            List<ElectricityReading> electricityReadings = meterReadings.ElectricityReadings;
-            return smartMeterId != null && smartMeterId.Any()
-                    && electricityReadings != null && electricityReadings.Any();
+            _meterReadingService.StoreReadings(meterReadings);
+            return Created(nameof(StoreReadings), "Meter readings stored successfully.");
         }
-
-        [HttpGet("read/{smartMeterId}")]
-        public ObjectResult GetReading(string smartMeterId) {
-            return new OkObjectResult(_meterReadingService.GetReadings(smartMeterId));
+        catch(Exception e)
+        {
+            _logger.LogError(e, string.Concat(nameof(MeterReadingController), ':', nameof(StoreReadings)));
+            return StatusCode(StatusCodes.Status500InternalServerError, e);
         }
     }
 }

@@ -1,30 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using JOIEnergy.Domain;
-
-namespace JOIEnergy.Services
+using JOIEnergy.Repositories;
+using Microsoft.Extensions.Logging;
+namespace JOIEnergy.Services;
+public class MeterReadingService(ILogger<MeterReadingService> logger, IMeterReadingRepository meterReadingRepository) : IMeterReadingService
 {
-    public class MeterReadingService : IMeterReadingService
+    private readonly ILogger<MeterReadingService> _logger = logger;
+    private readonly IMeterReadingRepository _meterReadingRepository = meterReadingRepository;
+    public List<ElectricityReading> GetReadings(string smartMeterId)
     {
-        public Dictionary<string, List<ElectricityReading>> MeterAssociatedReadings { get; set; }
-        public MeterReadingService(Dictionary<string, List<ElectricityReading>> meterAssociatedReadings)
+        try
         {
-            MeterAssociatedReadings = meterAssociatedReadings;
+            List<ElectricityReading> electricityReadings = _meterReadingRepository.GetReadings(smartMeterId);
+            return electricityReadings;
         }
-
-        public List<ElectricityReading> GetReadings(string smartMeterId) {
-            if (MeterAssociatedReadings.ContainsKey(smartMeterId)) {
-                return MeterAssociatedReadings[smartMeterId];
-            }
-            return new List<ElectricityReading>();
+        catch(Exception e)
+        {
+            _logger.LogError(e, string.Concat(nameof(MeterReadingService), ':', nameof(GetReadings)));
+            throw;
         }
-
-        public void StoreReadings(string smartMeterId, List<ElectricityReading> electricityReadings) {
-            if (!MeterAssociatedReadings.ContainsKey(smartMeterId)) {
-                MeterAssociatedReadings.Add(smartMeterId, new List<ElectricityReading>());
-            }
-
-            electricityReadings.ForEach(electricityReading => MeterAssociatedReadings[smartMeterId].Add(electricityReading));
+    }
+    public void StoreReadings(MeterReadings meterReadings)
+    {
+        try
+        {
+            _meterReadingRepository.StoreReadings(meterReadings);
+        }
+        catch(Exception e)
+        {
+            _logger.LogError(e, string.Concat(nameof(MeterReadingService), ':', nameof(StoreReadings)));
+            throw;
         }
     }
 }

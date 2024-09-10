@@ -6,10 +6,6 @@ namespace JOIEnergy.Generator
 {
     public class ElectricityReadingGenerator
     {
-        public ElectricityReadingGenerator()
-        {
-
-        }
         public List<ElectricityReading> Generate(int number)
         {
             var readings = new List<ElectricityReading>();

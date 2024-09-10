@@ -1,23 +1,31 @@
-﻿using System;
+﻿using JOIEnergy.Repositories;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
-using JOIEnergy.Enums;
 
 namespace JOIEnergy.Services
 {
-    public class AccountService : IAccountService
-    { 
-        private Dictionary<string, string> _smartMeterToPricePlanAccounts;
-
-        public AccountService(Dictionary<string, string> smartMeterToPricePlanAccounts) {
-            _smartMeterToPricePlanAccounts = smartMeterToPricePlanAccounts;
-        }
-
-        public string GetPricePlanIdForSmartMeterId(string smartMeterId) {
-            if (!_smartMeterToPricePlanAccounts.ContainsKey(smartMeterId))
+    public class AccountService(ILogger<AccountService> logger, IAccountRepository accountRepository) : IAccountService
+    {
+        private readonly IAccountRepository _accountRepository = accountRepository;
+        private readonly ILogger<AccountService> _logger = logger;
+        public string GetPricePlanIdForSmartMeterId(string smartMeterId)
+        {
+            try
             {
-                return null;
+                var price = _accountRepository.GetPricePlanIdForSmartMeterId(smartMeterId);
+                if (price == null)
+                {
+                    _logger.LogWarning($"No Price Plan found for Smart Meter ID: {smartMeterId}");
+                    return null;
+                }
+                return price;
             }
-            return _smartMeterToPricePlanAccounts[smartMeterId];
+            catch(Exception e)
+            {
+                _logger.LogError(e, string.Concat(nameof(AccountService), ':', nameof(GetPricePlanIdForSmartMeterId)));
+                throw;
+            }
         }
     }
 }
