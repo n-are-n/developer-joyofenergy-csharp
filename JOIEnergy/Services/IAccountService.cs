@@ -1,7 +1,5 @@
-﻿namespace JOIEnergy.Services
+﻿namespace JOIEnergy.Services;
+public interface IAccountService
 {
-    public interface IAccountService
-    {
-        string GetPricePlanIdForSmartMeterId(string smartMeterId);
-    }
+    string GetPricePlanIdForSmartMeterId(string smartMeterId);
 }

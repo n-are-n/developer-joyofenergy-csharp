@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-
-namespace JOIEnergy.Services
+namespace JOIEnergy.Services;
+public interface IPricePlanService
 {
-    public interface IPricePlanService
-    {
-        Dictionary<string, decimal> GetCostForEachPlan(string smartMeterId);
-        IEnumerable<KeyValuePair<string, decimal>> GetRecommendedPricePlans(string smartMeterId, int? limit);
-    }
+    Dictionary<string, decimal> GetCostForEachPlan(string smartMeterId);
+    IEnumerable<KeyValuePair<string, decimal>> GetRecommendedPricePlans(string smartMeterId, int? limit);
 }

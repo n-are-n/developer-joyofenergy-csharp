@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using JOIEnergy.Enums;
-
-namespace JOIEnergy.Domain
+namespace JOIEnergy.Domain;
+public class PricePlan
 {
-    public class PricePlan
-    {
-        public string PlanName { get; set; }
-        public Supplier EnergySupplier { get; set; }
-        public decimal UnitRate { get; set; }
-        public IList<PeakTimeMultiplier> PeakTimeMultiplier { get; set;}
-    }
+    public string PlanName { get; set; }
+    public Supplier EnergySupplier { get; set; }
+    public decimal UnitRate { get; set; }
+    public IList<PeakTimeMultiplier> PeakTimeMultiplier { get; set;}
 }

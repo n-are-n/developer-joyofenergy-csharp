@@ -20,19 +20,19 @@ public class InMemoryContext
     {
         var pricePlans = new List<PricePlan> {
             new() {
-                PlanName = SupplierUtility.GetPricePlanId(Supplier.DrEvilsDarkEnergy),
+                PlanName = SupplierPricePlanMapper.GetPricePlanId(Supplier.DrEvilsDarkEnergy),
                 EnergySupplier = Supplier.DrEvilsDarkEnergy,
                 UnitRate = 10m,
                 PeakTimeMultiplier = []
             },
             new() {
-                PlanName = SupplierUtility.GetPricePlanId(Supplier.TheGreenEco),
+                PlanName = SupplierPricePlanMapper.GetPricePlanId(Supplier.TheGreenEco),
                 EnergySupplier = Supplier.TheGreenEco,
                 UnitRate = 2m,
                 PeakTimeMultiplier = []
             },
             new() {
-                PlanName = SupplierUtility.GetPricePlanId(Supplier.PowerForEveryone),
+                PlanName = SupplierPricePlanMapper.GetPricePlanId(Supplier.PowerForEveryone),
                 EnergySupplier = Supplier.PowerForEveryone,
                 UnitRate = 1m,
                 PeakTimeMultiplier = []
@@ -45,12 +45,14 @@ public class InMemoryContext
     {
         get
         {
-            Dictionary<string, string> smartMeterToPricePlanAccounts = new Dictionary<string, string>();
-            smartMeterToPricePlanAccounts.Add("smart-meter-0", SupplierUtility.GetPricePlanId(Supplier.DrEvilsDarkEnergy));
-            smartMeterToPricePlanAccounts.Add("smart-meter-1", SupplierUtility.GetPricePlanId(Supplier.TheGreenEco));
-            smartMeterToPricePlanAccounts.Add("smart-meter-2", SupplierUtility.GetPricePlanId(Supplier.DrEvilsDarkEnergy));
-            smartMeterToPricePlanAccounts.Add("smart-meter-3", SupplierUtility.GetPricePlanId(Supplier.PowerForEveryone));
-            smartMeterToPricePlanAccounts.Add("smart-meter-4", SupplierUtility.GetPricePlanId(Supplier.NullSupplier));
+            Dictionary<string, string> smartMeterToPricePlanAccounts = new()
+            {
+                { "smart-meter-0", SupplierPricePlanMapper.GetPricePlanId(Supplier.DrEvilsDarkEnergy) },
+                { "smart-meter-1", SupplierPricePlanMapper.GetPricePlanId(Supplier.TheGreenEco) },
+                { "smart-meter-2", SupplierPricePlanMapper.GetPricePlanId(Supplier.DrEvilsDarkEnergy) },
+                { "smart-meter-3", SupplierPricePlanMapper.GetPricePlanId(Supplier.PowerForEveryone) },
+                { "smart-meter-4", SupplierPricePlanMapper.GetPricePlanId(Supplier.TheGreenEco) }
+            };
             return smartMeterToPricePlanAccounts;
         }
     }

@@ -18,6 +18,7 @@ public class MeterReadingController(ILogger<MeterReadingController> logger, IMet
     {
         try
         {
+            _logger.LogInformation(string.Concat(nameof(MeterReadingController), ':', nameof(GetReadings)));
             List<ElectricityReading> electricityReadings = _meterReadingService.GetReadings(smartMeterId);
             return Ok(electricityReadings);
         }
@@ -33,6 +34,7 @@ public class MeterReadingController(ILogger<MeterReadingController> logger, IMet
     {
         try
         {
+            _logger.LogInformation(string.Concat(nameof(MeterReadingController), ':', nameof(StoreReadings)));
             _meterReadingService.StoreReadings(meterReadings);
             return Created(nameof(StoreReadings), "Meter readings stored successfully.");
         }
