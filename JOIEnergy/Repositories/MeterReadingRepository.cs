@@ -4,10 +4,10 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 namespace JOIEnergy.Repositories;
-public class MeterReadingRepository(ILogger<MeterReadingRepository> logger, InMemoryContext context) : IMeterReadingRepository
+public class MeterReadingRepository(ILogger<MeterReadingRepository> logger, IInMemoryContext context) : IMeterReadingRepository
 {
     private readonly ILogger<MeterReadingRepository> _logger = logger;
-    private readonly InMemoryContext _context = context;
+    private readonly IInMemoryContext _context = context;
     public List<ElectricityReading> GetReadings(string smartMeterId)
     {
         _logger.LogInformation(string.Concat(nameof(MeterReadingRepository), ':', nameof(GetReadings)));

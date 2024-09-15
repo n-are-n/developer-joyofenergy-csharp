@@ -7,11 +7,11 @@ using Microsoft.Extensions.Logging;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace JOIEnergy.Controllers;
 [Route("price-plans")]
-public class PricePlanController(ILogger<PricePlanController> logger, IPricePlanService pricePlanService, IAccountService accountService) : Controller
+public class PricePlanController(ILogger<PricePlanController> logger, IAccountService accountService, IPricePlanService pricePlanService) : Controller
 {
     private readonly ILogger<PricePlanController> _logger = logger;
-    private readonly IPricePlanService _pricePlanService = pricePlanService;
     private readonly IAccountService _accountService = accountService;
+    private readonly IPricePlanService _pricePlanService = pricePlanService;
     [HttpGet("compare-all/{smartMeterId}")]
     public IActionResult GetCostForEachPlan(string smartMeterId)
     {

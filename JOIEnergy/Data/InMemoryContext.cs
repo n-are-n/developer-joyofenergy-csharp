@@ -5,10 +5,25 @@ using JOIEnergy.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 namespace JOIEnergy.Data;
-public class InMemoryContext
+public class InMemoryContext : IInMemoryContext
 {
     public List<MeterReadings> MeterReadings { get; }
     public Dictionary<string, PricePlan> PricePlans { get; }
+    public Dictionary<string, string> SmartMeterToPricePlanAccounts
+    {
+        get
+        {
+            Dictionary<string, string> smartMeterToPricePlanAccounts = new()
+            {
+                { "smart-meter-0", SupplierPricePlanMapper.GetPricePlanId(Supplier.DrEvilsDarkEnergy) },
+                { "smart-meter-1", SupplierPricePlanMapper.GetPricePlanId(Supplier.TheGreenEco) },
+                { "smart-meter-2", SupplierPricePlanMapper.GetPricePlanId(Supplier.DrEvilsDarkEnergy) },
+                { "smart-meter-3", SupplierPricePlanMapper.GetPricePlanId(Supplier.PowerForEveryone) },
+                { "smart-meter-4", SupplierPricePlanMapper.GetPricePlanId(Supplier.TheGreenEco) }
+            };
+            return smartMeterToPricePlanAccounts;
+        }
+    }
     public InMemoryContext()
     {
         MeterReadings = [];
@@ -40,21 +55,6 @@ public class InMemoryContext
         };
 
         pricePlans.ForEach(x => PricePlans.Add(x.PlanName, x));
-    }
-    public Dictionary<string, string> SmartMeterToPricePlanAccounts
-    {
-        get
-        {
-            Dictionary<string, string> smartMeterToPricePlanAccounts = new()
-            {
-                { "smart-meter-0", SupplierPricePlanMapper.GetPricePlanId(Supplier.DrEvilsDarkEnergy) },
-                { "smart-meter-1", SupplierPricePlanMapper.GetPricePlanId(Supplier.TheGreenEco) },
-                { "smart-meter-2", SupplierPricePlanMapper.GetPricePlanId(Supplier.DrEvilsDarkEnergy) },
-                { "smart-meter-3", SupplierPricePlanMapper.GetPricePlanId(Supplier.PowerForEveryone) },
-                { "smart-meter-4", SupplierPricePlanMapper.GetPricePlanId(Supplier.TheGreenEco) }
-            };
-            return smartMeterToPricePlanAccounts;
-        }
     }
     private MeterReadings GenerateMeterElectricityReadings()
     {

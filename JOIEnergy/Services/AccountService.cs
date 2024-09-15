@@ -1,6 +1,7 @@
-﻿using JOIEnergy.Exceptions;
+﻿using JOIEnergy.Domain;
 using JOIEnergy.Repositories;
 using JOIEnergy.Utilities;
+using JOIEnergy.Validation;
 using Microsoft.Extensions.Logging;
 using System;
 namespace JOIEnergy.Services;
@@ -13,7 +14,7 @@ public class AccountService(ILogger<AccountService> logger, IAccountRepository a
         try
         {
             _logger.LogInformation(string.Concat(nameof(AccountService), ':', nameof(GetPricePlanIdForSmartMeterId)));
-            SmartMeterValidator.ValidateSmartMeterId(smartMeterId);
+            new MeterReadingValidatorBuilder().AddRule(new SmartMeterIdValidationRule()).Validate(new MeterReadings() { SmartMeterId = smartMeterId });
             var pricePlanId = _accountRepository.GetPricePlanIdForSmartMeterId(smartMeterId);
             _logger.LogInformation("Price of the plan retrived successfully");
             return pricePlanId;

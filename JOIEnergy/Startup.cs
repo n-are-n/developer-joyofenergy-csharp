@@ -18,7 +18,7 @@ public class Startup
         services.AddTransient<IMeterReadingRepository, MeterReadingRepository>();
         services.AddTransient<IPricePlanService, PricePlanService>();
         services.AddTransient<IPricePlanRepository, PricePlanRepository>();
-        services.AddSingleton<InMemoryContext>();
+        services.AddSingleton<IInMemoryContext, InMemoryContext>();
         services.AddSwaggerGen();
     }
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
