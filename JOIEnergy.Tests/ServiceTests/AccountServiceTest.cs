@@ -2,7 +2,6 @@ using JOIEnergy.Services;
 using JOIEnergy.Repositories;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
 using Xunit;
 using JOIEnergy.Exceptions;
 namespace JOIEnergy.Tests.ServiceTests;
@@ -11,7 +10,6 @@ public class AccountServiceTests
     private readonly Mock<ILogger<AccountService>> _mockLogger;
     private readonly Mock<IAccountRepository> _mockAccountRepository;
     private readonly AccountService _accountService;
-
     public AccountServiceTests()
     {
         _mockLogger = new();

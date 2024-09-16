@@ -52,7 +52,7 @@ public class MeterReadingControllerTests
     {
         var meterReadings = new MeterReadings
         {
-            SmartMeterId = "12345",
+            SmartMeterId = "smart-meter-0",
             ElectricityReadings = [
                 new() { Time = DateTime.Now, Reading = 0.1m },
             ]

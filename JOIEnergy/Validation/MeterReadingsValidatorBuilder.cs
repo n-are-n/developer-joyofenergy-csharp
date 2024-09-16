@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using JOIEnergy.Domain;
-
 namespace JOIEnergy.Validation;
 public class MeterReadingValidatorBuilder
 {
@@ -12,6 +11,9 @@ public class MeterReadingValidatorBuilder
     }
     public void Validate(MeterReadings meterReadings)
     {
-        foreach (var rule in _rules) rule.Validate(meterReadings);
+        foreach (var rule in _rules)
+        {
+            rule.Validate(meterReadings);
+        }
     }
 }

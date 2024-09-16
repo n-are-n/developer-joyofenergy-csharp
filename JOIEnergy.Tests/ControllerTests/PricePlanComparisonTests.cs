@@ -44,7 +44,7 @@ public class PricePlanControllerTests
     {
         string smartMeterId = It.IsAny<string>();
         _mockAccountService.Setup(service => service.GetPricePlanIdForSmartMeterId(smartMeterId)).Throws(new InvalidSmartMeterException("Test exception"));
-        var result = _controller.GetCostForEachPlan(smartMeterId);
+        var result = _controller.GetCostForEachPlan(smartMeterId) as ObjectResult;
         var objectResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
     }

@@ -9,6 +9,9 @@ public partial class SmartMeterIdValidationRule : IValidationRule<MeterReadings>
     private static partial Regex MyRegex();
     public void Validate(MeterReadings meterReadings)
     {
-        if (!MyRegex().IsMatch(meterReadings.SmartMeterId)) throw new InvalidSmartMeterException("Invalid Smart Meter ID");
+        if (!MyRegex().IsMatch(meterReadings.SmartMeterId))
+        {
+            throw new InvalidSmartMeterException("Invalid Smart Meter ID");
+        }
     }
 }

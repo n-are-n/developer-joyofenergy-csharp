@@ -9,7 +9,6 @@ public static class CostCalculator
     {
         return electricityReadings.Average(reading => reading.Reading);
     }
-
     private static decimal CalculateTimeElapsed(List<ElectricityReading> electricityReadings)
     {
         var firstReading = electricityReadings.Min(reading => reading.Time);
@@ -20,8 +19,11 @@ public static class CostCalculator
     {
         decimal average = CalculateAverageReading(electricityReadings);
         decimal timeElapsed = CalculateTimeElapsed(electricityReadings);
-        if (average == 0 || timeElapsed == 0) return 0;
-        var costPerUnit = (average / timeElapsed) * pricePlan.UnitRate;
+        if (average == 0 || timeElapsed == 0)
+        {
+            return 0;
+        }
+        var costPerUnit = average / timeElapsed * pricePlan.UnitRate;
         return Math.Round(costPerUnit, 3);
     }
 }

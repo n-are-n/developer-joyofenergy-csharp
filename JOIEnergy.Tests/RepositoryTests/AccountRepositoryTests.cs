@@ -10,7 +10,6 @@ public class AccountRepositoryTests
     private readonly Mock<ILogger<AccountRepository>> _mockLogger;
     private readonly Mock<IInMemoryContext> _mockContext;
     private readonly AccountRepository _repository;
-
     public AccountRepositoryTests()
     {
         _mockContext = new();

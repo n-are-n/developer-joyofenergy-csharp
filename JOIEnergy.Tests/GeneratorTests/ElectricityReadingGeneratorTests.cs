@@ -22,11 +22,17 @@ public class ElectricityReadingGeneratorTests
     [Fact]
     public void Generate_ReadingsAreWithinExpectedRange()
     {
-        foreach (var reading in electricityReadings) Assert.InRange(reading.Reading, 0m, 1m);
+        foreach (var reading in electricityReadings)
+        {
+            Assert.InRange(reading.Reading, 0m, 1m);
+        }
     }
     [Fact]
     public void Generate_ReadingsAreSortedByTime()
     {
-        for (int i = 0; i < electricityReadings.Count - 1; i++) Assert.True(electricityReadings[i].Time <= electricityReadings[i + 1].Time);
+        for (int i = 0; i < electricityReadings.Count - 1; i++)
+        {
+            Assert.True(electricityReadings[i].Time <= electricityReadings[i + 1].Time);
+        }
     }
 }

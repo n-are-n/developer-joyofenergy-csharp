@@ -37,20 +37,17 @@ public class InMemoryContext : IInMemoryContext
             new() {
                 PlanName = SupplierPricePlanMapper.GetPricePlanId(Supplier.DrEvilsDarkEnergy),
                 EnergySupplier = Supplier.DrEvilsDarkEnergy,
-                UnitRate = 10m,
-                PeakTimeMultiplier = []
+                UnitRate = 10m
             },
             new() {
                 PlanName = SupplierPricePlanMapper.GetPricePlanId(Supplier.TheGreenEco),
                 EnergySupplier = Supplier.TheGreenEco,
-                UnitRate = 2m,
-                PeakTimeMultiplier = []
+                UnitRate = 2m
             },
             new() {
                 PlanName = SupplierPricePlanMapper.GetPricePlanId(Supplier.PowerForEveryone),
                 EnergySupplier = Supplier.PowerForEveryone,
-                UnitRate = 1m,
-                PeakTimeMultiplier = []
+                UnitRate = 1m
             }
         };
 

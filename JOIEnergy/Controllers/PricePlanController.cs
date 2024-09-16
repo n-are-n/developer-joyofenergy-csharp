@@ -29,7 +29,6 @@ public class PricePlanController(ILogger<PricePlanController> logger, IAccountSe
             return StatusCode(StatusCodes.Status500InternalServerError, e);
         }
     }
-
     [HttpGet("recommend/{smartMeterId}")]
     public IActionResult RecommendPricePlans(string smartMeterId, int? limit = null)
     {

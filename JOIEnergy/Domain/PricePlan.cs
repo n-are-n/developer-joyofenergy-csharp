@@ -6,5 +6,4 @@ public class PricePlan
     public string PlanName { get; set; }
     public Supplier EnergySupplier { get; set; }
     public decimal UnitRate { get; set; }
-    public IList<PeakTimeMultiplier> PeakTimeMultiplier { get; set;}
 }

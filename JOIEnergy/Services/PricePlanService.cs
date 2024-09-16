@@ -30,13 +30,11 @@ public class PricePlanService(ILogger<PricePlanService> logger, IMeterReadingSer
         try
         {
             Dictionary<string, decimal> consumptionForPricePlans = GetCostForEachPlan(smartMeterId);
-            if (!consumptionForPricePlans.Any())
-            {
-                _logger.LogWarning($"No consumption data found for Smart Meter ID: {smartMeterId}");
-                return [];
-            }
             var sortedRecommendations = consumptionForPricePlans.OrderBy(pricePlanComparison => pricePlanComparison.Value);
-            if (limit.HasValue && limit.Value > 0 && limit.Value < sortedRecommendations.Count()) return sortedRecommendations.Take(limit.Value);
+            if (limit.HasValue && limit.Value > 0 && limit.Value < sortedRecommendations.Count())
+            {
+                return sortedRecommendations.Take(limit.Value);
+            }
             return sortedRecommendations;
         }
         catch(Exception e)

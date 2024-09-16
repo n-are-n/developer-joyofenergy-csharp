@@ -18,7 +18,13 @@ public class MeterReadingRepository(ILogger<MeterReadingRepository> logger, IInM
     {
         _logger.LogInformation(string.Concat(nameof(MeterReadingRepository), ':', nameof(StoreReadings)));
         MeterReadings meterReading = _context.MeterReadings.FirstOrDefault(mr => mr.SmartMeterId == meterReadings.SmartMeterId);
-        if (meterReading == null) _context.MeterReadings.Add(meterReadings);
-        else meterReading.ElectricityReadings.AddRange(meterReadings.ElectricityReadings);
+        if (meterReading == null) 
+        {
+            _context.MeterReadings.Add(meterReadings);
+        }
+        else
+        {
+            meterReading.ElectricityReadings.AddRange(meterReadings.ElectricityReadings);
+        }
     }
 }

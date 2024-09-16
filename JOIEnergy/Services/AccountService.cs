@@ -1,6 +1,5 @@
 ﻿using JOIEnergy.Domain;
 using JOIEnergy.Repositories;
-using JOIEnergy.Utilities;
 using JOIEnergy.Validation;
 using Microsoft.Extensions.Logging;
 using System;
